@@ -4,7 +4,7 @@ function soccerAPITest(){
 	    method: 'GET',
     	headers: {
 	    	'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
-		    'X-RapidAPI-Key': '44a15a6015msh8e4a362dcffd431p16f115jsn5aacda723577'
+		    'X-RapidAPI-Key': 'YOUR KEY'
 	    }
     };
     //const SEASON = 2022;
