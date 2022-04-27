@@ -52,10 +52,12 @@ function soccerAPITest(){
         console.log("DisplayLeagues");
         let div = document.getElementById("leagues");
         let div2 = document.getElementById("dropdown_contents");
+        let div3 = document.getElementById("TeamImg");
         let results = parseInt(div2.getAttribute("number_of_leagues"));
         console.log("results" , results);
         console.log("i" , i);
         removeAllChildNodes(div);
+        removeAllChildNodes(div3);
         i = parseInt(i);
         let end = 0;
         if(results > 20){
@@ -230,14 +232,15 @@ function soccerAPITest(){
         div.appendChild(table);
     }
     function displayTeam_Info(data){
+        let div = document.getElementById("TeamImg");
         let div2 =  document.getElementById("leagues");
         //let body = document.getElementById("body");
         removeAllChildNodes(div2);
         console.log("DisplayTeam_Info")
-        /*let img = document.createElement("img");
+        let img = document.createElement("img");
         img.src =  data.response.team.logo
         img.alt = "Team Logo"
-        div2.appendChild(img);*/
+        div.appendChild(img);
         let p = document.createElement("p");
         p.className = "center";
         p.innerHTML=  data.response.team.name;
@@ -245,9 +248,9 @@ function soccerAPITest(){
         makeP("Form: " + data.response.form + " Record : " + data.response.fixtures.wins.total + "-" + data.response.fixtures.draws.total + "-" + data.response.fixtures.loses.total , div2);
         makeP("Wins:" + " Home: " + data.response.fixtures.wins.home + " Away: " + data.response.fixtures.wins.away, div2);
         makeP("Draws:" + " Home: " + data.response.fixtures.draws.home + " Away: " + data.response.fixtures.draws.away, div2);
-        makeP("Loses:" + " Home: " + data.response.fixtures.loses.home + " Away: " + data.response.fixtures.loses.away, div2);
-        makeP("Largest Win: Home:" + data.response.biggest.wins.home + " Away: " + data.response.biggest.wins.away, div2);
-        makeP("Largest Loss: Home:" + data.response.biggest.loses.home + " Away: " + data.response.biggest.loses.away, div2);
+        makeP("Loses:" + " Home : " + data.response.fixtures.loses.home + " Away: " + data.response.fixtures.loses.away, div2);
+        makeP("Largest Win: Home: " + data.response.biggest.wins.home + " Away: " + data.response.biggest.wins.away, div2);
+        makeP("Largest Loss: Home: " + data.response.biggest.loses.home + " Away: " + data.response.biggest.loses.away, div2);
         findTeamSquad();
     }
 

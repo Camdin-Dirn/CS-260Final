@@ -4,13 +4,14 @@
     <title>Soccer API</title>
     <script src="soccerAPITest.js"></script>
     <link href="soccerStyle.css" rel="stylesheet" type="text/css" />
+    <div class="dropdown">
+      <button class="dropbtn">Pick A Country</button>
+      <div id = "dropdown_contents" class="dropdown-content">
+      </div>
+    </div>
   </head>
   <body id = "body" onload="soccerAPITest()">
-    <div class="dropdown">
-        <button class="dropbtn">Pick A Country</button>
-        <div id = "dropdown_contents" class="dropdown-content">
-        </div>
-      </div>
-    <div id = "leagues"></div>
+    <div id = "TeamImg" class ="center_img"></div>
+    <div id = "leagues" class = "leagues"></div>
   </body>
 </html>
