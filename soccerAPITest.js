@@ -41,6 +41,7 @@ function soccerAPITest(){
                     if(first === 0){
                         let div = document.getElementById("dropdown_contents");   
                         div.setAttribute("number_of_leagues", data.results);
+                        div.setAttribute("number_of_leagues_P", data.results);
                     }
                     console.log("searching League");
                     displayLeagues(data, i);
@@ -65,7 +66,7 @@ function soccerAPITest(){
             results =  results - 20;
         }else{
             end = results;
-            results =  results - end;
+            results = results - end;
         }
         console.log("after subtraction"+ results)
         let table = document.createElement("table");
@@ -168,7 +169,6 @@ function soccerAPITest(){
 
     function displayStandings(data){
         console.log(data);
-        let div = document.getElementById("dropdown_contents");
         let div2 =  document.getElementById("leagues");
         let q = 0;
         while(q < data.response[0].league.standings.length){
@@ -176,8 +176,6 @@ function soccerAPITest(){
         table.className= "standings";
         let thead = document.createElement("thead");
         thead.className= "red";
-        let p = document.createElement("p");
-        p.innerHTML = data.response[0].league.name + " Standings";
         thead.innerHTML = "<tr><td>Pos.</td><td>Club</td><td>P</td><td>W</td><td>D</td><td>L</td><td>GD</td><td>Points</td></tr>"
         table.appendChild(thead);
         let tbody = document.createElement("tbody");
@@ -201,6 +199,9 @@ function soccerAPITest(){
             tbody.appendChild(tr);
             
             }
+            let p = document.createElement("p");
+            p.innerHTML = "Group: " + data.response[0].league.standings[q][0].group + " Standings";
+            div2.appendChild(p);
             q = q + 1;
         
         table.appendChild(tbody);
@@ -231,6 +232,7 @@ function soccerAPITest(){
         table.appendChild(tbody);
         div.appendChild(table);
     }
+
     function displayTeam_Info(data){
         let div = document.getElementById("TeamImg");
         let div2 =  document.getElementById("leagues");
@@ -304,19 +306,28 @@ function soccerAPITest(){
         let i = league.getAttribute("league_counter");
         let name = parent.getAttribute("league_country");
         let results = parseInt(league.getAttribute("number_of_leagues"));
+        let p = parseInt(league.getAttribute("number_of_leagues_P"));
+        console.log(p);
         console.log("in Make button"+ results)
         but.addEventListener("click", ()=> {
-            if(direction < 0 && i > 20){
+            if(direction < 0 ){
                 console.log("hit less results")
-                console.log(i);
+                console.log("WHY ARE WE HERE" + i);
                 //i is 20 here think beening saved up top as that number 
                 i = parseInt(i) - 40; 
-                results  = results + 40;
-                league.setAttribute("number_of_leagues", results); 
-                getCountryLeagues(name, i, 1);
+                if(i > 0){
+                    results  = results + 40;
+                    league.setAttribute("number_of_leagues", results); 
+                    getCountryLeagues(name, i, 1);
+                }else{
+                    results = results + (i + 20);
+                    league.setAttribute("number_of_leagues", results); 
+                      i = 0;
+                    getCountryLeagues(name, i, 1);
+                }
             }else if(direction > 0 && results > 0){
                 console.log("Hit More Results Button");
-                console.log(i)
+                console.log(i);
                 getCountryLeagues(name, i, 1)
             }
             else{

@@ -1,3 +1,7 @@
+body{
+  background-color: black;
+  color: white;
+}
 .dropbtn {
     background-color: #04AA6D;
     color: white;
@@ -44,6 +48,8 @@ td{
 table {
     margin: auto;
     border-collapse: collapse;
+    background-color: cyan;
+    color: black;
 }
 img{
     height: 100px;
@@ -84,10 +90,9 @@ p{
 .center_img{
   margin: auto;
   width: 100%;
-  height: 2%;
-  padding: 100px;
+  height: 5%;
   }
 .center_img>img{
   float: none;
-  margin-right: 1000px;
+  margin: auto;
 }
