@@ -4,7 +4,7 @@ function soccerAPITest(){
 	    method: 'GET',
     	headers: {
 	    	'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
-		    'X-RapidAPI-Key': 'YOUR KEY'
+		    'X-RapidAPI-Key': '44a15a6015msh8e4a362dcffd431p16f115jsn5aacda723577'
 	    }
     };
     //const SEASON = 2022;
@@ -73,7 +73,7 @@ function soccerAPITest(){
         let tbody = document.createElement("tbody");
         while(end > 0){
             let tr = document.createElement("tr");
-            tr.innerHTML = "<td><img src =" + data.response[i].league.logo + ">" + data.response[i].league.name + "</td>";
+            tr.innerHTML = "<td><img alt = 'Leagues Logo' src =" + data.response[i].league.logo + ">" + data.response[i].league.name + "</td>";
             tr.setAttribute("i", i)
             tr.addEventListener("click", ()=>{
                 let q = tr.getAttribute("i");
@@ -147,7 +147,7 @@ function soccerAPITest(){
                 if(data.results > 0){
                     displaySquad(data);
                 }else{
-                    console.log("NO SQUAD IN Data");
+                    window.alert("NO SQUAD IN Data");
                 }
             })
     }
@@ -156,7 +156,11 @@ function soccerAPITest(){
         console.log("findsStandings");
         searchSoccerStandings(id, year)
             .then(function(data){
-                displayStandings(data);
+                if(data.results ===0){
+                    window.alert("No Standings for this League")
+                }else{
+                    displayStandings(data);
+                }
             });
     }
 
@@ -164,6 +168,8 @@ function soccerAPITest(){
         console.log(data);
         let div = document.getElementById("dropdown_contents");
         let div2 =  document.getElementById("leagues");
+        let q = 0;
+        while(q < data.response[0].league.standings.length){
         let table = document.createElement("table");
         table.className= "standings";
         let thead = document.createElement("thead");
@@ -174,39 +180,74 @@ function soccerAPITest(){
         table.appendChild(thead);
         let tbody = document.createElement("tbody");
         let i = 0;
-        while(i < data.response[0].league.standings[0].length){
+        while(i < data.response[0].league.standings[q].length){
             let tr = document.createElement("tr");
-            tr.innerHTML = "<td>"+ data.response[0].league.standings[0][i].rank +"</td>" +
-                           "<td><img src =" + data.response[0].league.standings[0][i].team.logo + ">" + data.response[0].league.standings[0][i].team.name + "</td>" +
-                           "<td>" + data.response[0].league.standings[0][i].all.played + "</td>"+
-                           "<td>" + data.response[0].league.standings[0][i].all.win+ "</td>"+
-                           "<td>" + data.response[0].league.standings[0][i].all.draw+ "</td>"+
-                           "<td>" + data.response[0].league.standings[0][i].all.lose+ "</td>"+
-                           "<td>" + data.response[0].league.standings[0][i].goalsDiff+ "</td>"+
-                           "<td>" + data.response[0].league.standings[0][i].points+ "</td>";
-            if(parseInt(data.response[0].league.standings[0][i].rank) < 4){
+            tr.innerHTML = "<td>"+ data.response[0].league.standings[q][i].rank +"</td>" +
+                           "<td><img alt = 'Teams Logo' src =" + data.response[0].league.standings[q][i].team.logo + ">" + data.response[0].league.standings[q][i].team.name + "</td>" +
+                           "<td>" + data.response[0].league.standings[q][i].all.played + "</td>"+
+                           "<td>" + data.response[0].league.standings[q][i].all.win+ "</td>"+
+                           "<td>" + data.response[0].league.standings[q][i].all.draw+ "</td>"+
+                           "<td>" + data.response[0].league.standings[q][i].all.lose+ "</td>"+
+                           "<td>" + data.response[0].league.standings[q][i].goalsDiff+ "</td>"+
+                           "<td>" + data.response[0].league.standings[q][i].points+ "</td>";
+            if(parseInt(data.response[0].league.standings[q][i].rank) < 4){
                 tr.className = "top";
             }else{
                 tr.className = "bottom";
             }
             i = i + 1;
             tbody.appendChild(tr);
-        }
+            
+            }
+            q = q + 1;
+        
         table.appendChild(tbody);
         div2.appendChild(table);
+        }
     }
 
     function displaySquad(data){
         console.log("displaySquad");
+        let div = document.getElementById('leagues');
+        let table = document.createElement("table");
+        let thead = document.createElement("thead");
+        thead.innerHTML = "<tr><th>Player Img</th><th>Player Name</th>" 
+                        + "<th>Player Number</th><th>Position</th><th>Age</th></tr>"
+        table.appendChild(thead);
+        let tbody = document.createElement("tbody");
+        let i = 0;
+        while(i < data.response[0].players.length){
+            let tr = document.createElement("tr");
+            tr.innerHTML = "<td><img alt = 'Players Picture' src =" + data.response[0].players[i].photo + ">" +
+                           "<td>" + data.response[0].players[i].name + "</td>"+
+                           "<td>" + data.response[0].players[i].number+ "</td>"+
+                           "<td>" + data.response[0].players[i].position+ "</td>"+
+                           "<td>" + data.response[0].players[i].age+ "</td>"
+            i = i + 1;
+            tbody.appendChild(tr);
+        }
+        table.appendChild(tbody);
+        div.appendChild(table);
     }
     function displayTeam_Info(data){
         let div2 =  document.getElementById("leagues");
+        //let body = document.getElementById("body");
         removeAllChildNodes(div2);
         console.log("DisplayTeam_Info")
-        let div = document.createElement("div");
-        div.className = "center";
-        div.innerHTML= "<img src ="+ data.response.team.logo+ ">" + data.response.team.name;
-        div2.appendChild(div);
+        /*let img = document.createElement("img");
+        img.src =  data.response.team.logo
+        img.alt = "Team Logo"
+        div2.appendChild(img);*/
+        let p = document.createElement("p");
+        p.className = "center";
+        p.innerHTML=  data.response.team.name;
+        div2.appendChild(p);
+        makeP("Form: " + data.response.form + " Record : " + data.response.fixtures.wins.total + "-" + data.response.fixtures.draws.total + "-" + data.response.fixtures.loses.total , div2);
+        makeP("Wins:" + " Home: " + data.response.fixtures.wins.home + " Away: " + data.response.fixtures.wins.away, div2);
+        makeP("Draws:" + " Home: " + data.response.fixtures.draws.home + " Away: " + data.response.fixtures.draws.away, div2);
+        makeP("Loses:" + " Home: " + data.response.fixtures.loses.home + " Away: " + data.response.fixtures.loses.away, div2);
+        makeP("Largest Win: Home:" + data.response.biggest.wins.home + " Away: " + data.response.biggest.wins.away, div2);
+        makeP("Largest Loss: Home:" + data.response.biggest.loses.home + " Away: " + data.response.biggest.loses.away, div2);
         findTeamSquad();
     }
 
@@ -224,20 +265,28 @@ function soccerAPITest(){
         table.appendChild(thead);
         let tbody = document.createElement("tbody");
         let i = data.results -1;
-        let tr = document.createElement("tr");
+        let number = 0;
         while(i > -1){
-            let td = document.createElement("td");
-            td.innerHTML = "<img src =" + data.response[i].team.logo + ">" + data.response[i].team.name;
-            td.setAttribute("i", i)
-            td.addEventListener("click", ()=>{
-                let q = td.getAttribute("i");
-                div.setAttribute("team_id", data.response[q].team.id);
-                findTeamInfo();
-            });
-            tr.appendChild(td);
+            let tr = document.createElement("tr");
+            while(number < 6 && i > -1){
+                let td = document.createElement("td");
+                td.innerHTML = "<img alt = 'Team Logo' src =" + data.response[i].team.logo + ">" + data.response[i].team.name;
+                td.setAttribute("i", i)
+                td.addEventListener("click", ()=>{
+                    let q = td.getAttribute("i");
+                    div.setAttribute("team_id", data.response[q].team.id);
+                    findTeamInfo();
+                });
+                tr.appendChild(td);
+                number = number + 1
+                i = i - 1;
+                console.log(i);
+            }
+            number = 0;
             tbody.appendChild(tr);
-            i = i - 1;
+            console.log(i);
         }
+        console.log("are we here")
         table.appendChild(tbody);
         div2.appendChild(table);
         console.log("end of display teams");
@@ -282,6 +331,11 @@ function soccerAPITest(){
         parent.appendChild(but);
     }
 
+    function makeP(innerHTML, body){
+        let p = document.createElement("p");
+        p.innerHTML=  innerHTML;
+        body.appendChild(p);
+    }
     function removeAllChildNodes(parent) {
         while (parent.firstChild) {
             parent.removeChild(parent.firstChild);
