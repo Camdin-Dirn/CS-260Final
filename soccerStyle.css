@@ -96,3 +96,61 @@ p{
   float: none;
   margin: auto;
 }
+
+.small{
+  height: 30px;
+  width: 30px;
+}
+
+.leftP{
+  text-align: left;
+  height: 30px;
+  width: 200px;
+}
+
+.logo{
+  height: 80px;
+  width: 80px;
+  border: 3px solid black;
+  background-color: gray;
+}
+
+.pGoal{
+  padding: 20px;
+  
+}
+.fixture{
+  background-color: white;
+  border: 10px solid black;
+}
+.teamFix{
+  width: 250px;
+  border: 0px solid black;
+}
+.timeFix{
+  border: 0px solid black;
+  width:50px;
+  padding-right: 50%;
+  
+}
+.lName{
+  text-align: left;
+  margin-left:35%;
+}
+
+.live{
+  color: yellow;
+  font-size: larger;
+}
+
+.welcome{
+  font-weight: lighter;
+  font-size: xx-large;
+
+}
+
+.Soccerary{
+  height: 200px;
+  width: 200px;
+  float: center;
+}

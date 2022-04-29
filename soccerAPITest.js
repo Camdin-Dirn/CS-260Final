@@ -12,9 +12,17 @@ function soccerAPITest(){
     div.setAttribute("league_counter", 0)
     searchSoccerCountries()
             .then(function(data){
-                console.log(data);
+                console.log("Where is this?")
                 dropDownCountries(data);
             });
+    function getFixtures(){
+            searchFixtures()
+                .then(function(data){
+                    console.log(data);
+                    displayFixtures(data);
+                    
+                });
+    }
 
     function dropDownCountries(data){
         let div  = document.getElementById("dropdown_contents");
@@ -32,8 +40,101 @@ function soccerAPITest(){
             
             i = i + 1;
         }
+        getFixtures();
     }
-
+    function fixtureButton(){
+        let but = document.getElementById("but");
+        but.addEventListener("click", function(){
+            getFixtures();
+        });
+    }
+    function displayFixtures(data){
+        console.log("This is display fixtures");
+        let div = document.getElementById("leagues");
+        let div2 = document.getElementById("TeamImg");
+        removeAllChildNodes(div);
+        removeAllChildNodes(div2);
+        let i = 0;
+        let p  = document.createElement("p");
+        p.innerHTML = "There are " + data.results  + " live fixtures!!!";
+        p.className = "live";
+        div.appendChild(p);
+        while(i < data.results){
+            let league = document.createElement('p');
+            league.innerHTML = data.response[i].league.name;
+            league.className = "lName";
+            div.appendChild(league);
+            let table = document.createElement("table");
+            table.className = "fixture";
+            let tbody = document.createElement("tbody");
+            let tr = document.createElement("tr");
+            let td1 = document.createElement("td");
+            td1.className = "teamFix";
+            let td2 = document.createElement("td");
+            td2.className = "teamFix";
+            let tdTime = document.createElement("td");
+            tdTime.className = "timeFix";
+            tdTime.innerHTML = data.response[i].fixture.status.short;
+            let pTime = document.createElement("p");
+            pTime.innerHTML = data.response[i].fixture.status.elapsed + "'";
+            tdTime.appendChild(pTime);
+            let awayName = data.response[i].teams.away.name;
+            let homeName = data.response[i].teams.home.name; 
+            let pNameA = document.createElement("p");
+            pNameA.className = "pName"
+            pNameA.innerHTML = "<img class='logo' alt = 'Team Logo' src= "+ data.response[i].teams.away.logo+ ">" + awayName;
+            td1.appendChild(pNameA);
+            let pNameH = document.createElement("p");
+            pNameH.className = "pName"
+            pNameH.innerHTML = "<img class='logo' alt = 'Team Logo' src= "+ data.response[i].teams.home.logo+ ">" + homeName;
+            td2.appendChild(pNameH);
+            let p1 = document.createElement("p");
+            p1.innerHTML = data.response[i].goals.away;
+            p1.className = "pGoal";
+            td1.appendChild(p1);
+            //td2.innerHTML = "<img class='logo' alt = 'Team Logo' src= "+ data.response[i].teams.home.logo+ ">" + homeName;
+            let p2 = document.createElement("p");
+            p2.innerHTML = data.response[i].goals.home;
+            p2.className = "pGoal";
+            td2.appendChild(p2);
+            let e = 0;
+            let l = data.response[i].events.length;
+            console.log( awayName + " " + homeName);
+            console.log(l);
+            while(e < data.response[i].events.length){
+                if(data.response[i].events[e].type === "Goal"){
+                        console.log("goal");
+                        if(data.response[i].events[e].team.name === awayName){
+                            console.log("Goal Away");
+                            let pAG = document.createElement('p');
+                            pAG.className = "leftP";
+                            pAG.innerHTML = "<img class = 'small' alt = 'Goal Symbol' src = 'soccerBall.webp'>"+
+                                            data.response[i].events[e].player.name +
+                                            " " + data.response[i].events[e].time.elapsed + "'"; 
+                            td1.appendChild(pAG);
+                        }else{
+                            console.log("Goal Home");
+                            console.log("Goal Away");
+                            let pHG = document.createElement('p');
+                            pHG.className = "leftP";
+                            pHG.innerHTML = "<img class = 'small' alt = 'Goal Symbol' src = 'soccerBall.webp'>"+
+                                            data.response[i].events[e].player.name +
+                                            " " + data.response[i].events[e].time.elapsed + "'"; 
+                            td2.appendChild(pHG);
+                        }
+                }
+                e = e + 1;
+            }
+            tr.appendChild(td1);
+            tr.appendChild(tdTime);
+            tr.appendChild(td2);
+            tbody.appendChild(tr);
+            table.appendChild(tbody);
+            div.appendChild(table);
+            i = i + 1;
+        }
+        fixtureButton()
+    }
     function getCountryLeagues(name, i,first){
         searchSoccerLeagues(name)
                 .then (function(data){
@@ -399,6 +500,12 @@ function soccerAPITest(){
     }
     async function searchSoccerTeamSquad(id){
         let url= SOCCER_URL + "players/squads?team="+ id;
+        let results = await fetch(url,options);
+        return await results.json();
+    }
+
+    async function searchFixtures(){
+        url = SOCCER_URL + "fixtures?live=all";
         let results = await fetch(url,options);
         return await results.json();
     }
