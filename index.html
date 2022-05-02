@@ -1,45 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>CS-241 Final Project</title>
-    <link href="Final241.css" rel="stylesheet" type="text/css" />
-  </head>
-  <body class = "center">
-    <div><img src = "March_madness.png" alt = "March Madness Logo"></div>
-    <h1>March Madness Data</h1>
-    <p>By Camdin Dirnberger</p>  
-    <div>
-        <h2 class="bigtextareas">I wanted to see what leads to success during March Maddness. To achive this I found historical data for the tournament with a dataset from Kaggle called College Basketball Dataset. 
-            This Dataset is from 2013 through the 2021 season. Some variables in this dataset include team name, conference, games played, wins, ect...</h2>
-        <h3>&#x26B9; Hover over the graphs to enlarge them!</h3>
-        <p><a class = "underline" href="https://github.com/Camdin-Dirn/CS_241_Final">The Code</a></p>
-        <p><a class = "underline" href="https://www.kaggle.com/datasets/andrewsundberg/college-basketball-dataset">The Data</a></p>
-        <p><img class="enlarge-onhover" src = "SEEDPOSTSEASON.png" alt = "Postseason by Seed ViolinPlot College Basketball"></p>
-        <h2>As this violin plot shows, the higher seeds, as expected, makes it farther into the tournament. So as a 1 seed your way more likely to make it to the championship then the 14-16 seed.
-          The selection committee seems to make the correct choses on seed for teams with very little outliers. The low seeds are knocked out early and the high make it far.
-        </h2>
-        <p><img class="enlarge-onhover" src = "ADJOE_VS_ADJED_PS.png" alt="Postseason by Adjusted Offensive Efficiency and Adjusted Defensive Efficiency College Basketball"></p>
-        <h2>ADJDE and ADJOE are Adjusted Defensive Efficiency and Adjusted Offensive Efficiency. These numbers a calculated by An estimate of the
-          defensive or offensive efficiency (points allowed/scored per 100 possessions) a team would have against the average Division I offense.
-          The higher the ADJOE the better that teams offense was and the lower the ADJDE the better that teams defense was.
-          The bottom right of this graph is where the teams with the best Adjusted Offensive Efficiency and best Adjusted Defensive Efficiency lie.
-          There are teams that have a really good offense or defense but still don't make it far into the tournament. As this graph shows the teams the
-          get farthest into the tournament and have a really good mix of offense and defense. Neither are bad. There are very little teams that have lower than
-          95 ADJDE and higher than 115 ADJOE that don't make it to at least the round of 32 and many make it a lot farther.
-        </h2>
-        <div><img class = "small" src = "BigSky.png" alt = "Big Sky Logo"><h1>Big Sky Basketball Data</h1></div>
-        <h2 class="bigtextareas">I am a big Montana Griz fan and they are in the Big Sky Conference so I wanted to see what leads a 
-                                team to get the Auto Bid to March Madness and what seed is of the teams that makes it. To do this I took the 
-                                same data from before and took just the teams in the Big Sky conference. I first look at a scatterplot of all the teams
-                                Adjusted Offensive Efficiency by their Adjusted Defensive Efficiency and then colored each point based on what seed they
-                                got in the tournament. If a team didn't make it into the tournament it falls in the None seed. The graph below is the results.</h2>
-        <p><img class="enlarge-onhover" src = "BIGSKY_ADJOE_VS_ADJED_SEED.png" alt="Big Sky Postseason seeding by Adjusted Offensive Efficiency and Adjusted Defensive Efficiency College Basketball"></p>
-        <h2>Looking at the ADJDE and ADJOE again to see if it affects if a Big Sky Team makes the tournament, are seeded, and if it affects what seed they get
-          if they do make it. Looking at this it doesn't look as clear cut as the other graph but if you want to make it to the tournament you still have to be in the top of the league in ADJOE and
-          ADJDE. But the most shocking thing is the two highest seed teams were not clearly better than the rest. The two most balance team didn't make
-          the tournament and got a 14 seed. This might be because one year the NCAA field was better than the others. Also the teams with the better
-          ADJDE and ADJOE might have played lower level teams leading to better stats but worse resumes leading to the lower seed.
-        </h2>
+    <title>Soccerary</title>
+    <link rel = "icon" href = "Soccerary.png" 
+        type = "image/x-icon">
+    <div class ="center_img"><img class = "Soccerary" alt ="Soccerary Logo" src = "Soccerary.png"></div>    
+    <p class = "welcome">Welcome To Soccerary!!!</p>
+    <script src="soccerAPITest.js"></script>
+    <link href="soccerStyle.css" rel="stylesheet" type="text/css" />
+    <div class="dropdown">
+      <button class="dropbtn">Pick A Country</button>
+      <div id = "dropdown_contents" class="dropdown-content">
       </div>
+    </div>
+  </head>
+  <body id = "body" onload="soccerAPITest()">
+    <div id = "TeamImg" class ="center_img"></div>
+    <div id = "leagues" class = "leagues">
+    </div>
+    <button id = 'but'>Go Back To Fixtures</button>
   </body>
 </html>
